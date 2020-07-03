@@ -31,9 +31,8 @@ The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 star
   $ sudo reboot
   ```
 
-  3. Copy the following to the target locations. Using `rsync` can make this simple.
+  3. Copy the following to the target locations. Example: `rsync -v --rsync-path="sudo rsync" origin user@destination`
 
-  `rsync -v --rsync-path="sudo rsync" origin user@destination`
     * `dhcpcd.conf` to `/etc/dhcpcd.conf`
     * `wlan*.conf` to `/etc/hostapd/`
     * `wlan*.network` to `/etc/systemd/network`
