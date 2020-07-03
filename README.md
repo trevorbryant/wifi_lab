@@ -41,12 +41,12 @@ The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 star
 
   3. Copy the following to the target locations. Example: `rsync -v --rsync-path="sudo rsync" origin user@destination`
 
-    * `dhcpcd.conf` to `/etc/dhcpcd.conf`
-    * `wlan*.conf` to `/etc/hostapd/`
-    * `wlan*.network` to `/etc/systemd/network`
-    * `wpa_wlan*.conf` to `/etc/wpa_supplicant/`
-    * `*.service` to `/etc/systemd/system/`
-    * `connect` to `/root/connect`
+  * `dhcpcd.conf` to `/etc/dhcpcd.conf`
+  * `wlan*.conf` to `/etc/hostapd/`
+  * `wlan*.network` to `/etc/systemd/network`
+  * `wpa_wlan*.conf` to `/etc/wpa_supplicant/`
+  * `*.service` to `/etc/systemd/system/`
+  * `connect` to `/root/connect`
 
   4. Enable services to run at boot, and reboot.
   ```bash
