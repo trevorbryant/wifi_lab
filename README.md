@@ -25,11 +25,6 @@ The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 star
   $ sudo apt update && sudo apt -y dist-upgrade
   ```
 
-  Optional: Disable [MOTD advertisement](https://bugs.launchpad.net/ubuntu/+source/base-files/+bug/1701068).
-  ```bash
-  sudo sed -i 's/ENABLED=1/ENABLED=0/' /etc/default/motd-news
-  ```
-
   2. Install the necessary packages, and any others desired, and reboot the system.
   ```bash
   $ sudo apt -y install hostapd rfkill mlocate net-tools netfilter-persistent iptables-persistent
@@ -47,17 +42,20 @@ The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 star
     * `connect` to `/root/connect`
 
 
-  4. Enable services to run at boot.
+  4. Enable services to run at boot, and reboot.
   ```bash
   $ sudo systemctl enable connect
   $ sudo systemctl enable hostapd
+  $ sudo reboot
   ```
 
-  5. Reboot the syst
-
 ## Extra
-
 The `connect` script will configure interfaces `wlan0` and `wlan4` to connect (and reconnect) to target APs. This can be modified or disabled and `wlan4` instead used for an additional network, that is currently configured for 2.4/5ghz.
+
+Disable [MOTD advertisement](https://bugs.launchpad.net/ubuntu/+source/base-files/+bug/1701068).
+```bash
+$ sudo sed -i 's/ENABLED=1/ENABLED=0/' /etc/default/motd-news
+```
 
 ## Troubleshoot
 
