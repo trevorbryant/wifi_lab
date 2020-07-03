@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#sleep 60
 wpa_supplicant -i wlan0 -c /etc/wpa_supplicant/wpa_wlan0.conf -B
 wpa_supplicant -i wlan4 -c /etc/wpa_supplicant/wpa_wlan4.conf -B
 sleep 5
-#killall -9 wpa_supplicant
