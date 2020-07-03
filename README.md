@@ -1,5 +1,5 @@
 # Wireless Lab
-Build a multi-Access Point wireless lab for wireless auditing or other testing.
+Build a multi-Access Point wireless lab for auditing or other testing.
 
 ## Setup
 This project does not use `dnsmasq`. Instead, it makes use of the `systemd-networkd` package provided natively, and `hostapd` for the wireless interface configurations. This removes the complexity of disabling and removing out-of-box configurations in place of competing services.
