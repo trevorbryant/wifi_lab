@@ -13,7 +13,7 @@ In short, the summary of configuration is to recreate world-world scenarios.
   * `wlan4` connects to `wlan2`(CTF_02) as a client
   * `wlan1` is a WEP (CTF_01) without clients access point
   * `wlan2` is a WEP-SKA (CTF_02) with clients access point
-  * `wlan3` is a WPA-PSK (CTF_03) with client access point
+  * `wlan3` is a WPA-PSK (CTF_03) with clients access point
 
 ## Requirements
 The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 starter kit, and the wireless adapters below were selected. Any supported wireless adapter may be used.
@@ -26,6 +26,8 @@ The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 star
   * [Panda Wireless PAU07 N600 Dual Band Wireless N USB Adapter x2](https://smile.amazon.com/gp/product/B00U2SIS0O)
 
 ## Instructions
+These step-by-step instructions are to set up the configurations to create the wireless client and access point interfaces.
+
   1. After initial login, set timezone, hostname, and update packages.
   ```bash
   $ sudo hostnamectl set-hostname four
@@ -46,14 +48,16 @@ The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 star
   * `wlan*.network` to `/etc/systemd/network`
   * `wpa_wlan*.conf` to `/etc/wpa_supplicant/`
   * `*.service` to `/etc/systemd/system/`
-  * `connect` to `/root/connect`
 
   4. Enable services to run at boot, and reboot.
   ```bash
-  $ sudo systemctl enable connect
-  $ sudo systemctl enable hostapd
+  $ sudo systemctl enable hostapd.service
+  $ sudo systemctl enable wpa_supplicant_wlan0.service
+  $ sudo systemctl enable wpa_supplicant_wlan4.service
   $ sudo reboot
   ```
+
+In theory, the system will start successfully with all interfaces doing as they are configured to.
 
 ## Extra
 The `connect` script will configure interfaces `wlan0` and `wlan4` to connect (and reconnect) to target APs. This can be modified or disabled and `wlan4` instead used for an additional network, that is currently configured for 2.4/5ghz.
