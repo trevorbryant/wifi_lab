@@ -68,8 +68,15 @@ $ sudo sed -i 's/ENABLED=1/ENABLED=0/' /etc/default/motd-news
 ```
 
 ## Troubleshoot
-If experiencing an unusually longer boot time and interfaces `wlan0` and `wlan4` are not connected as clients, then disable `connect` service from systemd and instead use the (now deprecated) `rc.local` service.
+#### Network boot delays
+If experiencing an unusually longer boot time, review `/var/log/syslog` for any `systemd-networkd-wait-online` warnings or errors causing the waiting for network delays.
+
+Check the status with `$ sudo systemctl status systemd-networkd-wait-online.service` to identify the cause of delays. If a specific network interface is causing the delays, you may modify the `systemd-networkd-wait-online.service`to the example below.
+
+```bash
+$ ExecStart=/lib/systemd/systemd-networkd-wait-online --ignore wlan1 --ignore wlan2 --ignore wlan3 --ignore wlan4
+```
 
 ## To do:
-  * Set up network bridge
-  * Set up iptables masquerade
+  * Network bridge
+  * iptables masquerade
