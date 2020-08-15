@@ -1,16 +1,16 @@
 ACTION=="add", SUBSYSTEM=="ieee80211", ATTRS{devpath}=="1.1", \
-    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_01 type managed", \
-    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_02 type managed", \
-    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_03 type managed", \
-    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_04 type managed", \
-    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_05 type managed", \
-    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_06 type managed", \
-    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_07 type managed"
+    RUN+="/usr/sbin/iw dev wlan1 interface add ctf_01 type managed", \
+    RUN+="/usr/sbin/iw dev wlan1 interface add ctf_02 type managed", \
+    RUN+="/usr/sbin/iw dev wlan1 interface add ctf_03 type managed", \
+    RUN+="/usr/sbin/iw dev wlan1 interface add ctf_04 type managed", \
+    RUN+="/usr/sbin/iw dev wlan1 interface add ctf_05 type managed", \
+    RUN+="/usr/sbin/iw dev wlan1 interface add ctf_06 type managed", \
+    RUN+="/usr/sbin/iw dev wlan1 interface add ctf_07 type managed"
 ACTION=="add", SUBSYSTEM=="ieee80211", ATTRS{devpath}=="1.2", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_08 type managed", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_09 type managed", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_10 type managed", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_11 type managed", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_12 type managed", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_13 type managed", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_14 type managed"
+    RUN+="/usr/sbin/iw dev wlan2 interface add ctf_08 type managed", \
+    RUN+="/usr/sbin/iw dev wlan2 interface add ctf_09 type managed", \
+    RUN+="/usr/sbin/iw dev wlan2 interface add ctf_10 type managed", \
+    RUN+="/usr/sbin/iw dev wlan2 interface add ctf_11 type managed", \
+    RUN+="/usr/sbin/iw dev wlan2 interface add ctf_12 type managed", \
+    RUN+="/usr/sbin/iw dev wlan2 interface add ctf_13 type managed", \
+    RUN+="/usr/sbin/iw dev wlan2 interface add ctf_14 type managed"
