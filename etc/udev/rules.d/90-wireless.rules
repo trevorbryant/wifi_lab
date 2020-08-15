@@ -4,12 +4,13 @@ ACTION=="add", SUBSYSTEM=="ieee80211", ATTRS{devpath}=="1.1", \
     RUN+="/usr/sbin/iw dev wlan1 interface add CTF_03 type managed", \
     RUN+="/usr/sbin/iw dev wlan1 interface add CTF_04 type managed", \
     RUN+="/usr/sbin/iw dev wlan1 interface add CTF_05 type managed", \
-    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_06 type managed"
+    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_06 type managed", \
+    RUN+="/usr/sbin/iw dev wlan1 interface add CTF_07 type managed"
 ACTION=="add", SUBSYSTEM=="ieee80211", ATTRS{devpath}=="1.2", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_07 type managed", \
     RUN+="/usr/sbin/iw dev wlan2 interface add CTF_08 type managed", \
     RUN+="/usr/sbin/iw dev wlan2 interface add CTF_09 type managed", \
     RUN+="/usr/sbin/iw dev wlan2 interface add CTF_10 type managed", \
     RUN+="/usr/sbin/iw dev wlan2 interface add CTF_11 type managed", \
-    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_12 type managed"
-
+    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_12 type managed", \
+    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_13 type managed", \
+    RUN+="/usr/sbin/iw dev wlan2 interface add CTF_14 type managed"
