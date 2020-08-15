@@ -10,7 +10,7 @@ RestartSec=2
 #Environment=DAEMON_CONF=/etc/hostapd/hostapd.conf
 EnvironmentFile=-/etc/default/hostapd
 #ExecStart=/usr/sbin/hostapd -B -P /run/hostapd.pid -B $DAEMON_OPTS ${DAEMON_CONF}
-ExecStart=/usr/sbin/hostapd -B -P /run/hostapd.pid -B /etc/hostapd/wlan1.conf /etc/hostapd/wlan2.conf /etc/hostapd/wlan3.conf
+ExecStart=/usr/sbin/hostapd -B -P /run/hostapd.pid -B /etc/hostapd/ctf_00.conf
 
 [Install]
 WantedBy=multi-user.target
