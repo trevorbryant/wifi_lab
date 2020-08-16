@@ -101,7 +101,7 @@ $ sudo sed -i 's/ENABLED=1/ENABLED=0/' /etc/default/motd-news
 ```
 
 ## Troubleshoot
-#### Network boot delays
+### Network boot delays
 If experiencing an unusually longer boot time, review `/var/log/syslog` for any `systemd-networkd-wait-online` warnings or errors causing the waiting for network delays.
 
 Check the status with `$ sudo systemctl status systemd-networkd-wait-online.service` to identify the cause of delays. If a specific network interface is causing the delays, you may modify the `systemd-networkd-wait-online.service`to the example below.
@@ -111,6 +111,8 @@ The server can be disabled entirely, though that is recommended if no other opti
 ```bash
 $ ExecStart=/lib/systemd/systemd-networkd-wait-online --ignore wlan1 --ignore wlan2
 ```
+### Service start failure
+As is common with `systemd`, there is a possibility that the `hostapd` services may attempt to start before the virtual interfaces are created. If this is the case, edit the `hostapd@ctf_*.service` and change `Restart=on-failure` to `Restart=always`.
 
 ## To do:
   * Network bridge
