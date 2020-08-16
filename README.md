@@ -1,19 +1,5 @@
 # Wireless Lab
-Build a multi-Access Point wireless lab for auditing or other testing.
-
-## Setup
-This project does not use `dnsmasq`. Instead, it makes use of the `systemd-networkd` package provided natively, and `hostapd` for the wireless interface configurations. This removes the complexity of disabling and removing out-of-box configurations in place of competing services.
-
-As the project is currently configured, `wlan0` remains as a client while wlan's one through three are configured as managed access points for the 2.4 frequency.
-
-The `wlan4` is currently configured as a client, but can become a managed interface with 5ghz when modifying the `hostapd.service` file to include `wlan4.conf` at service start.
-
-In short, the summary of configuration is to recreate world-world scenarios.
-  * `wlan0` connects to `wlan3` (CTF_03) as a client
-  * `wlan4` connects to `wlan2`(CTF_02) as a client
-  * `wlan1` is a WEP (CTF_01) without clients access point
-  * `wlan2` is a WEP-SKA (CTF_02) with clients access point
-  * `wlan3` is a WPA-PSK (CTF_03) with clients access point
+Build a multi-Access Point wireless lab for security auditing.
 
 ## Requirements
 The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 starter kit, and the wireless adapters below were selected. Any supported wireless adapter may be used.
@@ -21,9 +7,42 @@ The hardware used to build this lab is simple and minimal. A Raspberry Pi 4 star
   * Knowledge and ability of managing operating systems, its software, and wireless adapters
   * [Ubuntu 20.04 LTS](https://ubuntu.com/download/raspberry-pi)
   * [Raspberry Pi 4 (4GB) Starter Set](https://smile.amazon.com/gp/product/B0854QL9L2)
-  * [Panda Ultra 150Mbps Wireless N USB Adapter x2](https://smile.amazon.com/gp/product/B00762YNMG)
+  * [Panda Ultra 150Mbps Wireless N USB Adapter x2](https://smile.amazon.com/gp/product/B00762YNMG) (optional)
   * [Panda 300Mbps Wireless N USB Adapter x2](https://smile.amazon.com/gp/product/B00EQT0YK2)
-  * [Panda Wireless PAU07 N600 Dual Band Wireless N USB Adapter x2](https://smile.amazon.com/gp/product/B00U2SIS0O)
+  * [Panda Wireless PAU07 N600 Dual Band Wireless N USB Adapter x2](https://smile.amazon.com/gp/product/B00U2SIS0O) (for 5Ghz)
+
+## Setup
+This project does **not** use `dnsmasq`. Instead, this project makes use of the `systemd-networkd` package provided, and `hostapd` for the wireless interface station and access point configurations. This removes the complexity of disabling and removing out-of-box configurations in place of third party competing services.
+
+As the project is currently configured, the `90-wireless.rules` will create 14 virtual interfaces where 01 through 07 are assigned to `wlan1`, and 08 through 14 are assigned to `wlan2`. This _should_ create the virtual interfaces with the adapters plugged into USB ports 1 and 2 during boot, or adding the adapters post-boot.
+
+The physical interfaces are configured as clients. Any combination of the wireless adapters can be used, however this project configuration required four adapters.
+
+### DHCPServer
+Because this project does not use the traditional `dnsmasq`, the DHCP server is configured to be handled by `systemd-networkd`'s [DHCPServer](https://wiki.archlinux.org/index.php/Systemd-networkd#[DHCPServer]). Each access point will manage its own DHCP server. Depending on the virtual interface addresses, may or may not be assigned to connecting clients to mimic real-world scenario.
+
+### hostapd
+The access points configuration files located in `/etc/hostapd/` are configured as follow:
+
+Configurations for `wlan1`:
+ * `CTF_01` &ndash; WEP 128-bit, connected client
+ * `CTF_02` &ndash; WEP, via a client (planned)
+ * `CTF_03` &ndash; WEP, clientless (planned)
+ * `CTF_04` &ndash; WEP, Shared Key Authentication
+ * `CTF_05` &ndash; WPA-PSK, via a roaming client
+ * `CTF_06` &ndash; WEP, via a roaming client
+ * `CTF_07` &ndash; TBD
+
+Configurations for `wlan2`:
+ * TBD
+
+### wpa_supplicant
+The physical interfaces are used as clients.
+
+ * `wlan0` &ndash; Client looking for `WCTF_15`
+ * `wlan1` &ndash; Connected client, `CTF_04`
+ * `wlan3` &ndash; Connected client, `CTF_01`
+ * `wlan4` &ndash; Roaming client, `CTF_05`, `CTF_06`
 
 ## Procedures
 ### Initial Configuration
@@ -44,16 +63,19 @@ $ sudo reboot
 
 3. Copy the following to the target locations. Example: `rsync -v --rsync-path="sudo rsync" origin user@destination`
 
-* `dhcpcd.conf` to `/etc/dhcpcd.conf`
-* `wlan*.conf` to `/etc/hostapd/`
-* `wlan*.network` to `/etc/systemd/network`
-* `wpa_wlan*.conf` to `/etc/wpa_supplicant/`
-* `*.service` to `/etc/systemd/system/`
+* `ctf_*.conf` &rarr; `/etc/hostapd/`
+* `ctf_*.network` &rarr; `/etc/systemd/network`
+* `wpa_supplicant-wlan*.conf` &rarr; `/etc/wpa_supplicant/`
+* `90-wireless.rules` &rarr; `/etc/udev/rules.d/90-wireless.rules`
 
-4. Enable services to run at boot, and reboot.
+4. Enable `systemd` services, and reboot.
 ```bash
-$ sudo systemctl enable hostapd.service
+$ sudo systemctl enable hostapd@ctf_01
+$ sudo systemctl enable hostapd@ctf_04
+$ sudo systemctl enable hostapd@ctf_05
+$ sudo systemctl enable hostapd@ctf_06
 $ sudo systemctl enable wpa_supplicant_wlan0.service
+$ sudo systemctl enable wpa_supplicant_wlan3.service
 $ sudo systemctl enable wpa_supplicant_wlan4.service
 $ sudo reboot
 ```
@@ -84,8 +106,10 @@ If experiencing an unusually longer boot time, review `/var/log/syslog` for any 
 
 Check the status with `$ sudo systemctl status systemd-networkd-wait-online.service` to identify the cause of delays. If a specific network interface is causing the delays, you may modify the `systemd-networkd-wait-online.service`to the example below.
 
+The server can be disabled entirely, though that is recommended if no other option is successful.
+
 ```bash
-$ ExecStart=/lib/systemd/systemd-networkd-wait-online --ignore wlan1 --ignore wlan2 --ignore wlan3 --ignore wlan4
+$ ExecStart=/lib/systemd/systemd-networkd-wait-online --ignore wlan1 --ignore wlan2
 ```
 
 ## To do:
