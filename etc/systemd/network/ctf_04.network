@@ -1,0 +1,12 @@
+[Match]
+Name=ctf_04
+
+[Network]
+Address=172.16.4.1/24
+DHCPServer=yes
+IPMasquerade=false
+IPForward=false
+
+[DHCPServer]
+PoolOffset=100
+PoolSize=20
