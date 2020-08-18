@@ -4,8 +4,8 @@ Name=ctf_06
 [Network]
 Address=172.16.6.1/24
 DHCPServer=yes
-IPMasquerade=false
-IPForward=false
+IPMasquerade=true
+IPForward=true
 
 [DHCPServer]
 PoolOffset=100

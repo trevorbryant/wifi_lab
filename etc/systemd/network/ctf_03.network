@@ -1,8 +1,9 @@
 [Match]
-Name=ctf_05
+Name=ctf_03
 
 [Network]
-Address=172.16.5.1/24
+Gateway=172.16.1.1
+Address=172.16.1.2/24
 DHCPServer=yes
 IPMasquerade=true
 IPForward=true
