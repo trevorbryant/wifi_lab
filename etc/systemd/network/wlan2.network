@@ -1,0 +1,5 @@
+[Match]
+Name=wlan2
+
+[Network]
+DHCP=ipv4
