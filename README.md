@@ -21,13 +21,15 @@ The physical interfaces are configured as clients. Any combination of the wirele
 ### DHCPServer
 Because this project does not use the traditional `dnsmasq`, the DHCP server is configured to be handled by `systemd-networkd`'s [DHCPServer](https://wiki.archlinux.org/index.php/Systemd-networkd#[DHCPServer]). Each access point will manage its own DHCP server. Depending on the virtual interface addresses, may or may not be assigned to connecting clients to mimic real-world scenario.
 
+**Note**: The physical interfaces that are on the system itself will not be assigned an IPv4 address by the DHCP server. External clients will receive an IPv4 address.
+
 ### hostapd
 The access points configuration files located in `/etc/hostapd/` are configured as follow:
 
 Configurations for `wlan1`:
  * `CTF_01` &ndash; WEP 128-bit, connected client
  * `CTF_02` &ndash; WEP, via a client (planned)
- * `CTF_03` &ndash; WEP, clientless (planned)
+ * `CTF_03` &ndash; WEP, clientless
  * `CTF_04` &ndash; WEP, Shared Key Authentication
  * `CTF_05` &ndash; WPA-PSK, via a roaming client
  * `CTF_06` &ndash; WEP, via a roaming client
@@ -40,7 +42,8 @@ Configurations for `wlan2`:
 The physical interfaces are used as clients.
 
  * `wlan0` &ndash; Client looking for `WCTF_15`
- * `wlan1` &ndash; Connected client, `CTF_04`
+ * `wlan1` &ndash; Cannot be used while VAPs are active
+ * `wlan2` &ndash; Connected client, `CTF_04`
  * `wlan3` &ndash; Connected client, `CTF_01`
  * `wlan4` &ndash; Roaming client, `CTF_05`, `CTF_06`
 
