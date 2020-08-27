@@ -1,11 +1,13 @@
 [Match]
-Name=ctf_05
+Name=wlan1
 
 [Network]
-Address=172.16.5.1/24
+Address=172.16.10.1/24
 DHCPServer=yes
 IPMasquerade=true
 IPForward=true
+LLDP=yes
+EmitLLDP=yes
 
 [DHCPServer]
 PoolOffset=100

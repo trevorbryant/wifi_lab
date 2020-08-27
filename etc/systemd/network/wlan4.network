@@ -1,5 +1,0 @@
-[Match]
-Name=wlan4
-
-[Network]
-DHCP=ipv4
